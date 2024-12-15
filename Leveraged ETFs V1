@@ -1,0 +1,85 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+bidar_url="https://ahrom.ebidar.ir/Download/DownloadNavChartList?exportType=Excel"
+ahrom_url="https://ahrom.charismafunds.ir/Download/DownloadNavChartList?exportType=Excel"
+Tavan_url="https://tavanfund.com/Download/DownloadNavChartList?exportType=Excel"
+jahesh_url="https://jahesh.irfarabi.ir/Download/DownloadNavChartList?exportType=Excel"
+shetab_url="https://shetabfund.ir/Download/DownloadNavChartList?exportType=Excel"
+moj_url="https://mojfund.ir/Download/DownloadNavChartList?exportType=Excel"
+narenj_url="https://narenj.fund/Download/DownloadNavChartList?exportType=Excel"
+""" Bidar """
+bidar_df=pd.read_excel(bidar_url)
+bidar_df = bidar_df.drop([0,1,2, ])
+bidar_df.columns.values[20] = 'Date'
+bidar_df.columns.values[1] = 'bidar_z'
+print("Bidar downloaded (15%)")
+""" Ahrom """
+ahrom_df = pd.read_excel(ahrom_url)
+ahrom_df = ahrom_df.drop([0,1,2, ])
+ahrom_df.columns.values[20] = 'Date'
+ahrom_df.columns.values[1] = 'ahrom_z'
+print("Ahrom downloaded (30%)")
+""" Tavan """
+Tavan_df = pd.read_excel(Tavan_url)
+Tavan_df = Tavan_df.drop([0,1,2, ])
+Tavan_df.columns.values[20] = 'Date'
+Tavan_df.columns.values[1] = 'tavan_z'
+print("Tavan downloaded (45%)")
+""" Jahesh """
+jahesh_df = pd.read_excel(jahesh_url)
+jahesh_df = jahesh_df.drop([0,1,2, ])
+jahesh_df.columns.values[20] = 'Date'
+jahesh_df.columns.values[1] = 'jahesh_z'
+print("Jahesh downloaded (60%)")
+""" shetab """
+shetab_df = pd.read_excel(shetab_url)
+shetab_df = shetab_df.drop([0,1,2, ])
+shetab_df.columns.values[20] = 'Date'
+shetab_df.columns.values[1] = 'shetab_z'
+print("Shetab downloaded (75%)")
+""" moj """
+moj_df = pd.read_excel(moj_url)
+moj_df = moj_df.drop([0,1,2, ])
+moj_df.columns.values[20] = 'Date'
+moj_df.columns.values[1] = 'moj_z'
+print("Moj downloaded (90%)")
+""" narenj """
+narenj_df = pd.read_excel(narenj_url)
+narenj_df = narenj_df.drop([0,1,2, ])
+narenj_df.columns.values[20] = 'Date'
+narenj_df.columns.values[1] = 'narenj_z'
+print("Narenj downloaded (100%)")
+
+
+""" merge """
+selected_bidar_df  = bidar_df[['Date', 'bidar_z']]
+selected_ahrom_df  = ahrom_df[['Date', 'ahrom_z']]
+selected_Tavan_df  = Tavan_df[['Date', 'tavan_z']]
+selected_jahesh_df = jahesh_df[['Date', 'jahesh_z']]
+selected_shetab_df = shetab_df[['Date', 'shetab_z']]
+selected_moj_df = moj_df[['Date', 'moj_z']]
+selected_narenj_df = narenj_df[['Date', 'narenj_z']]
+merged_df = pd.merge(selected_bidar_df, selected_ahrom_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_Tavan_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_jahesh_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_shetab_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_moj_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_narenj_df, on='Date', how='outer')
+""" plotting """
+merged_df.iloc[:, 1] = pd.to_numeric(merged_df.iloc[:, 1], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[1]])
+plt.plot(merged_df.iloc[:,1],label="Bidar")
+merged_df.iloc[:, 2] = pd.to_numeric(merged_df.iloc[:, 2], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[2]])
+plt.plot(merged_df.iloc[:,2],label="Ahrom")
+merged_df.iloc[:, 3] = pd.to_numeric(merged_df.iloc[:, 3], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[3]])
+plt.plot(merged_df.iloc[:,3],label="Tavan")
+merged_df.iloc[:, 4] = pd.to_numeric(merged_df.iloc[:, 4], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[4]])
+plt.plot(merged_df.iloc[:,4],label="jahesh")
+merged_df.iloc[:, 5] = pd.to_numeric(merged_df.iloc[:, 5], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[5]])
+plt.plot(merged_df.iloc[:,5],label="Shetab")
+plt.legend()
+plt.show()
