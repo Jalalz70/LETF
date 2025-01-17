@@ -81,5 +81,74 @@ plt.plot(merged_df.iloc[:,4],label="jahesh")
 merged_df.iloc[:, 5] = pd.to_numeric(merged_df.iloc[:, 5], errors='coerce')
 merged_df = merged_df.dropna(subset=[merged_df.columns[5]])
 plt.plot(merged_df.iloc[:,5],label="Shetab")
+plt.title("Leveraged ETF's leverage history")
+plt.legend()
+plt.show()
+
+
+
+
+
+
+""" مرتب سازی مارکت کپ"""
+bidar_df.rename(columns={bidar_df.columns[12]: 'bidar_marketcap'}, inplace=True)
+ahrom_df.rename(columns={ahrom_df.columns[12]: 'ahrom_marketcap'}, inplace=True)
+Tavan_df.rename(columns={Tavan_df.columns[12]: 'tavan_marketcap'}, inplace=True)
+jahesh_df.rename(columns={jahesh_df.columns[12]: 'jahesh_marketcap'}, inplace=True)
+shetab_df.rename(columns={shetab_df.columns[12]: 'shetab_marketcap'}, inplace=True)
+moj_df.rename(columns={moj_df.columns[12]: 'moj_marketcap'}, inplace=True)
+narenj_df.rename(columns={narenj_df.columns[12]: 'narenj_marketcap'}, inplace=True)
+
+
+
+""" مرج کردن مارکت کپ """
+bidar_df2 = bidar_df[['Date', 'bidar_marketcap']]          
+ahrom_df = ahrom_df[['Date', 'ahrom_marketcap']]
+Tavan_df = Tavan_df[['Date', 'tavan_marketcap']]
+jahesh_df = jahesh_df[['Date', 'jahesh_marketcap']]
+shetab_df = shetab_df[['Date', 'shetab_marketcap']]
+moj_df = moj_df[['Date', 'moj_marketcap']]
+narenj_df = narenj_df[['Date', 'narenj_marketcap']]
+market_cap = pd.merge(bidar_df2, ahrom_df, on='Date', how='outer')
+market_cap = pd.merge(market_cap, Tavan_df, on='Date', how='outer')
+market_cap = pd.merge(market_cap, jahesh_df, on='Date', how='outer')
+market_cap = pd.merge(market_cap, shetab_df, on='Date', how='outer')
+market_cap = pd.merge(market_cap, moj_df, on='Date', how='outer')
+market_cap = pd.merge(market_cap, narenj_df, on='Date', how='outer')
+
+
+
+
+
+
+""" نمایش """
+market_cap.iloc[:, 1] = pd.to_numeric(market_cap.iloc[:, 1], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[1]])
+plt.plot(market_cap.iloc[:,1],label="Bidar")
+
+market_cap.iloc[:, 2] = pd.to_numeric(market_cap.iloc[:, 2], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[2]])
+plt.plot(market_cap.iloc[:,2],label="ahrom")
+
+market_cap.iloc[:, 3] = pd.to_numeric(market_cap.iloc[:, 3], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[3]])
+plt.plot(market_cap.iloc[:,3],label="tavan")
+
+market_cap.iloc[:, 4] = pd.to_numeric(market_cap.iloc[:, 4], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[4]])
+plt.plot(market_cap.iloc[:,4],label="jahesh")
+
+market_cap.iloc[:, 5] = pd.to_numeric(market_cap.iloc[:, 5], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[5]])
+plt.plot(market_cap.iloc[:,5],label="shetab")
+
+market_cap.iloc[:, 6] = pd.to_numeric(market_cap.iloc[:, 6], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[6]])
+plt.plot(market_cap.iloc[:,6],label="moj")
+
+market_cap.iloc[:, 7] = pd.to_numeric(market_cap.iloc[:, 7], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[7]])
+plt.plot(market_cap.iloc[:,7],label="narenj")
+plt.title("leveraged ETF's market cap history")
 plt.legend()
 plt.show()
