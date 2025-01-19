@@ -2,7 +2,9 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 from io import StringIO
-
+from io import BytesIO
+import warnings
+import urllib3
 
 
 bidar_url="https://ahrom.ebidar.ir/Download/DownloadNavChartList?exportType=Excel"
@@ -16,7 +18,11 @@ narenj_url="https://narenj.fund/Download/DownloadNavChartList?exportType=Excel"
 
 
 """ Bidar """
-bidar_df=pd.read_excel(bidar_url)
+# غیرفعال کردن هشدار SSL (اختیاری)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(bidar_url, verify=False)
+bidar_df = pd.read_excel(BytesIO(response.content))
+
 bidar_df = bidar_df.drop([0,1,2, ])
 bidar_df.columns.values[20] = 'Date'
 bidar_df.columns.values[1] = 'bidar_z'
@@ -37,7 +43,12 @@ print("Bidar downloaded (15%)")
 
 
 """ Ahrom """
-ahrom_df = pd.read_excel(ahrom_url)
+# غیرفعال کردن هشدار SSL (اختیاری)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(ahrom_url, verify=False)
+ahrom_df = pd.read_excel(BytesIO(response.content))
+
+
 ahrom_df = ahrom_df.drop([0,1,2, ])
 ahrom_df.columns.values[20] = 'Date'
 ahrom_df.columns.values[1] = 'ahrom_z'
@@ -59,7 +70,11 @@ print("Ahrom downloaded (30%)")
 
 
 """ Tavan """
-Tavan_df = pd.read_excel(Tavan_url)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(Tavan_url, verify=False)
+Tavan_df = pd.read_excel(BytesIO(response.content))
+
+#Tavan_df = pd.read_excel(Tavan_url)
 Tavan_df = Tavan_df.drop([0,1,2, ])
 Tavan_df.columns.values[20] = 'Date'
 Tavan_df.columns.values[1] = 'tavan_z'
@@ -80,7 +95,12 @@ print("Tavan downloaded (45%)")
 
 
 """ Jahesh """
-jahesh_df = pd.read_excel(jahesh_url)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(jahesh_url, verify=False)
+jahesh_df = pd.read_excel(BytesIO(response.content))
+
+
+#jahesh_df = pd.read_excel(jahesh_url)
 jahesh_df = jahesh_df.drop([0,1,2, ])
 jahesh_df.columns.values[20] = 'Date'
 jahesh_df.columns.values[1] = 'jahesh_z'
@@ -101,7 +121,11 @@ print("Jahesh downloaded (60%)")
 
 
 """ shetab """
-shetab_df = pd.read_excel(shetab_url)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(shetab_url, verify=False)
+shetab_df = pd.read_excel(BytesIO(response.content))
+
+#shetab_df = pd.read_excel(shetab_url)
 shetab_df = shetab_df.drop([0,1,2, ])
 shetab_df.columns.values[20] = 'Date'
 shetab_df.columns.values[1] = 'shetab_z'
@@ -122,7 +146,12 @@ print("Shetab downloaded (75%)")
 
 
 """ moj """
-moj_df = pd.read_excel(moj_url)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(moj_url, verify=False)
+moj_df = pd.read_excel(BytesIO(response.content))
+
+
+#moj_df = pd.read_excel(moj_url)
 moj_df = moj_df.drop([0,1,2, ])
 moj_df.columns.values[20] = 'Date'
 moj_df.columns.values[1] = 'moj_z'
@@ -144,7 +173,12 @@ print("Moj downloaded (90%)")
 
 
 """ narenj """
-narenj_df = pd.read_excel(narenj_url)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+response = requests.get(narenj_url, verify=False)
+narenj_df = pd.read_excel(BytesIO(response.content))
+
+
+#narenj_df = pd.read_excel(narenj_url)
 narenj_df = narenj_df.drop([0,1,2, ])
 narenj_df.columns.values[20] = 'Date'
 narenj_df.columns.values[1] = 'narenj_z'
