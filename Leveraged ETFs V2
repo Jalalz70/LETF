@@ -1,0 +1,674 @@
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+from io import StringIO
+import tsemodule5 as tm5
+import jdatetime
+import os
+
+"""تعداد روزهای نمایش بازدهی را اینجا وارد کنید"""
+aa =[50,100,300]
+
+
+
+bidar_url="https://ahrom.ebidar.ir/Download/DownloadNavChartList?exportType=Excel"
+ahrom_url="https://ahrom.charismafunds.ir/Download/DownloadNavChartList?exportType=Excel"
+Tavan_url="https://tavanfund.com/Download/DownloadNavChartList?exportType=Excel"
+jahesh_url="https://jahesh.irfarabi.ir/Download/DownloadNavChartList?exportType=Excel"
+shetab_url="https://shetabfund.ir/Download/DownloadNavChartList?exportType=Excel"
+moj_url="https://mojfund.ir/Download/DownloadNavChartList?exportType=Excel"
+narenj_url="https://narenj.fund/Download/DownloadNavChartList?exportType=Excel"
+
+""" shakhes koll """
+shakhes_koll = tm5.index(1000)
+print("shakhes koll downloaded (5%)")
+""" Bidar """
+bidar_df=pd.read_excel(bidar_url)
+bidar_df = bidar_df.drop([0,1,2, ])
+bidar_df.columns.values[20] = 'Date'
+bidar_df.columns.values[1] = 'bidar_z'
+bidar_df.columns.values[18] = 'bidar_NAV'
+""" Bidar TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=44604318643489231"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    bidar_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Bidar downloaded (15%)")
+
+
+
+""" Ahrom """
+ahrom_df = pd.read_excel(ahrom_url)
+ahrom_df = ahrom_df.drop([0,1,2, ])
+ahrom_df.columns.values[20] = 'Date'
+ahrom_df.columns.values[1] = 'ahrom_z'
+ahrom_df.columns.values[18] = 'ahrom_NAV'
+""" Ahrom TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=17914401175772326"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    ahrom_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+
+print("Ahrom downloaded (30%)")
+
+
+
+""" Tavan """
+Tavan_df = pd.read_excel(Tavan_url)
+Tavan_df = Tavan_df.drop([0,1,2, ])
+Tavan_df.columns.values[20] = 'Date'
+Tavan_df.columns.values[1] = 'tavan_z'
+Tavan_df.columns.values[18] = 'tavan_NAV'
+""" Tavan TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=41927452991671109"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    tavan_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Tavan downloaded (45%)")
+
+
+
+""" Jahesh """
+jahesh_df = pd.read_excel(jahesh_url)
+jahesh_df = jahesh_df.drop([0,1,2, ])
+jahesh_df.columns.values[20] = 'Date'
+jahesh_df.columns.values[1] = 'jahesh_z'
+jahesh_df.columns.values[18] = 'jahesh_NAV'
+""" jahesh TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=7681671915916933"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    jahesh_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Jahesh downloaded (60%)")
+
+
+
+""" shetab """
+shetab_df = pd.read_excel(shetab_url)
+shetab_df = shetab_df.drop([0,1,2, ])
+shetab_df.columns.values[20] = 'Date'
+shetab_df.columns.values[1] = 'shetab_z'
+shetab_df.columns.values[18] = 'shetab_NAV'
+""" shetab TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=64216772923447100"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    shetab_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Shetab downloaded (75%)")
+
+
+
+""" moj """
+moj_df = pd.read_excel(moj_url)
+moj_df = moj_df.drop([0,1,2, ])
+moj_df.columns.values[20] = 'Date'
+moj_df.columns.values[1] = 'moj_z'
+moj_df.columns.values[18] = 'moj_NAV'
+""" Moj TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=67141987086032267"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    moj_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Moj downloaded (90%)")
+
+
+
+
+""" narenj """
+narenj_df = pd.read_excel(narenj_url)
+narenj_df = narenj_df.drop([0,1,2, ])
+narenj_df.columns.values[20] = 'Date'
+narenj_df.columns.values[1] = 'narenj_z'
+narenj_df.columns.values[18] = 'narenj_NAV'
+""" narenj TSE"""
+url = "http://old.tsetmc.com/tsev2/data/Export-txt.aspx?t=i&a=1&b=0&i=35831329532779850"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
+if response.status_code == 200:
+    csv_data = response.content.decode('utf-8')
+    narenj_tse_df = pd.read_csv(StringIO(csv_data))
+else:
+    print("Failed to fetch the file:", response.status_code)
+print("Narenj downloaded (100%)")
+
+
+
+
+
+
+
+
+
+import arabic_reshaper
+from bidi.algorithm import get_display
+
+
+def convert_index_to_jalali(df):
+    df.index = pd.to_datetime(df.index, errors='coerce')
+    jalali_dates = df.index.map(lambda x: jdatetime.date.fromgregorian(date=x).strftime('%Y/%m/%d') if pd.notnull(x) else None)    
+    df.index = jalali_dates
+    return df
+
+
+""" merge """
+selected_bidar_df  = bidar_df[['Date', 'bidar_z']]
+selected_ahrom_df  = ahrom_df[['Date', 'ahrom_z']]
+selected_Tavan_df  = Tavan_df[['Date', 'tavan_z']]
+selected_jahesh_df = jahesh_df[['Date', 'jahesh_z']]
+selected_shetab_df = shetab_df[['Date', 'shetab_z']]
+selected_moj_df = moj_df[['Date', 'moj_z']]
+selected_narenj_df = narenj_df[['Date', 'narenj_z']]
+
+merged_df = pd.merge(selected_bidar_df, selected_ahrom_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_Tavan_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_jahesh_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_shetab_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_moj_df, on='Date', how='outer')
+merged_df = pd.merge(merged_df, selected_narenj_df, on='Date', how='outer')
+
+
+selected_shakhes_df = shakhes_koll[['Close']].copy() 
+selected_shakhes_df = convert_index_to_jalali(selected_shakhes_df)
+selected_shakhes_df.reset_index(inplace=True)
+selected_shakhes_df.rename(columns={'index': 'Date'}, inplace=True)
+merged_df = pd.merge(merged_df, selected_shakhes_df, on='Date', how='outer')
+
+
+
+""" plotting """
+fig, ax1 = plt.subplots()
+l1 = get_display(arabic_reshaper.reshape('تاریخچه اهرم'))
+ax1.set_title(l1)
+
+
+
+merged_df.iloc[:, 1] = pd.to_numeric(merged_df.iloc[:, 1], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[1]])
+l1 = get_display(arabic_reshaper.reshape('بیدار'))
+ax1.plot(merged_df.iloc[:,1],label=l1)
+merged_df.iloc[:, 2] = pd.to_numeric(merged_df.iloc[:, 2], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[2]])
+l1 = get_display(arabic_reshaper.reshape('اهرم'))
+ax1.plot(merged_df.iloc[:,2],label=l1)
+merged_df.iloc[:, 3] = pd.to_numeric(merged_df.iloc[:, 3], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[3]])
+l1 = get_display(arabic_reshaper.reshape('توان'))
+ax1.plot(merged_df.iloc[:,3],label=l1)
+merged_df.iloc[:, 4] = pd.to_numeric(merged_df.iloc[:, 4], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[4]])
+l1 = get_display(arabic_reshaper.reshape('جهش'))
+ax1.plot(merged_df.iloc[:,4],label=l1)
+merged_df.iloc[:, 5] = pd.to_numeric(merged_df.iloc[:, 5], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[5]])
+l1 = get_display(arabic_reshaper.reshape('شتاب'))
+ax1.plot(merged_df.iloc[:,5],label=l1)
+merged_df.iloc[:, 6] = pd.to_numeric(merged_df.iloc[:, 6], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[6]])
+l1 = get_display(arabic_reshaper.reshape('موج'))
+ax1.plot(merged_df.iloc[:,6],label=l1)
+merged_df.iloc[:, 7] = pd.to_numeric(merged_df.iloc[:, 7], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[7]])
+l1 = get_display(arabic_reshaper.reshape('نارنج'))
+ax1.plot(merged_df.iloc[:,7],label=l1)
+
+
+ax2 = ax1.twinx()
+l1 = get_display(arabic_reshaper.reshape('شاخص کل'))
+merged_df.iloc[:, 8] = pd.to_numeric(merged_df.iloc[:, 8], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[8]])
+ax2.plot(merged_df.iloc[:,8],label=l1,linewidth=5)
+
+l1 = get_display(arabic_reshaper.reshape('روز'))
+l2 = get_display(arabic_reshaper.reshape('میزان اهرم'))
+l3 = get_display(arabic_reshaper.reshape('شاخص کل'))
+
+
+
+ax1.set_xlabel(l1)
+ax1.set_ylabel(l2)
+ax2.set_ylabel(l3)
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+plt.xticks([])
+plt.show()
+
+
+""" مرتب سازی مارکت کپ"""
+bidar_df.rename(columns={bidar_df.columns[12]: 'bidar_marketcap'}, inplace=True)
+ahrom_df.rename(columns={ahrom_df.columns[12]: 'ahrom_marketcap'}, inplace=True)
+Tavan_df.rename(columns={Tavan_df.columns[12]: 'tavan_marketcap'}, inplace=True)
+jahesh_df.rename(columns={jahesh_df.columns[12]: 'jahesh_marketcap'}, inplace=True)
+shetab_df.rename(columns={shetab_df.columns[12]: 'shetab_marketcap'}, inplace=True)
+moj_df.rename(columns={moj_df.columns[12]: 'moj_marketcap'}, inplace=True)
+narenj_df.rename(columns={narenj_df.columns[12]: 'narenj_marketcap'}, inplace=True)
+
+
+
+""" مرج کردن مارکت کپ """
+bidar_df2 = bidar_df[['Date', 'bidar_marketcap']]          
+ahrom_df2 = ahrom_df[['Date', 'ahrom_marketcap']]
+Tavan_df2 = Tavan_df[['Date', 'tavan_marketcap']]
+jahesh_df2 = jahesh_df[['Date', 'jahesh_marketcap']]
+shetab_df2 = shetab_df[['Date', 'shetab_marketcap']]
+moj_df2 = moj_df[['Date', 'moj_marketcap']]
+narenj_df2 = narenj_df[['Date', 'narenj_marketcap']]
+market_cap = pd.merge(bidar_df2, ahrom_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, Tavan_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, jahesh_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, shetab_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, moj_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, narenj_df2, on='Date', how='outer')
+market_cap = pd.merge(market_cap, selected_shakhes_df, on='Date', how='outer')
+#print(market_cap)
+
+
+
+
+""" نمایش """
+fig, ax1 = plt.subplots()
+l1 = get_display(arabic_reshaper.reshape('تاریخچه مارکت کپ'))
+ax1.set_title(l1)
+
+
+market_cap.iloc[:, 1] = pd.to_numeric(market_cap.iloc[:, 1], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[1]])
+l1 = get_display(arabic_reshaper.reshape('بیدار'))
+ax1.plot(market_cap.iloc[:,1],label=l1)
+market_cap.iloc[:, 2] = pd.to_numeric(market_cap.iloc[:, 2], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[2]])
+l1 = get_display(arabic_reshaper.reshape('اهرم'))
+ax1.plot(market_cap.iloc[:,2],label=l1)
+
+market_cap.iloc[:, 3] = pd.to_numeric(market_cap.iloc[:, 3], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[3]])
+l1 = get_display(arabic_reshaper.reshape('توان'))
+ax1.plot(market_cap.iloc[:,3],label=l1)
+
+market_cap.iloc[:, 4] = pd.to_numeric(market_cap.iloc[:, 4], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[4]])
+l1 = get_display(arabic_reshaper.reshape('جهش'))
+ax1.plot(market_cap.iloc[:,4],label=l1)
+
+market_cap.iloc[:, 5] = pd.to_numeric(market_cap.iloc[:, 5], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[5]])
+l1 = get_display(arabic_reshaper.reshape('شتاب'))
+ax1.plot(market_cap.iloc[:,5],label=l1)
+
+market_cap.iloc[:, 6] = pd.to_numeric(market_cap.iloc[:, 6], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[6]])
+l1 = get_display(arabic_reshaper.reshape('موج'))
+ax1.plot(market_cap.iloc[:,6],label=l1)
+
+market_cap.iloc[:, 7] = pd.to_numeric(market_cap.iloc[:, 7], errors='coerce')
+market_cap = market_cap.dropna(subset=[market_cap.columns[7]])
+l1 = get_display(arabic_reshaper.reshape('نارنج'))
+ax1.plot(market_cap.iloc[:,7],label=l1)
+
+
+ax2 = ax1.twinx()
+l1 = get_display(arabic_reshaper.reshape('شاخص کل'))
+merged_df.iloc[:, 8] = pd.to_numeric(merged_df.iloc[:, 8], errors='coerce')
+merged_df = merged_df.dropna(subset=[merged_df.columns[8]])
+ax2.plot(merged_df.iloc[:,8],label=l1,linewidth=5)
+
+
+
+l1 = get_display(arabic_reshaper.reshape('روز'))
+l2 = get_display(arabic_reshaper.reshape('میزان مارکت کپ'))
+l3 = get_display(arabic_reshaper.reshape('شاخص کل'))
+
+
+
+ax1.set_xlabel(l1)
+ax1.set_ylabel(l2)
+ax2.set_ylabel(l3)
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+plt.xticks([])
+plt.show()
+
+
+def convert_to_gregorian(jalali_date):
+    try:
+        # Assuming the date format is 'YYYY/MM/DD'
+        year, month, day = map(int, jalali_date.split('/'))
+        gregorian_date = jdatetime.date(year, month, day).togregorian()
+        return gregorian_date.strftime('%Y%m%d')
+    except Exception as e:
+        #print(f"Error converting date {jalali_date}: {e}")
+        return None
+""" مرتب کردن قیمت کلوز"""
+bidar_tse_df2 = bidar_tse_df
+bidar_tse_df2 = bidar_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_bidar_tse_df2  = bidar_tse_df2[['Date', '<CLOSE>']]
+#print(selected_bidar_tse_df2)
+
+ahrom_tse_df2 = ahrom_tse_df
+ahrom_tse_df2 = ahrom_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_ahrom_tse_df2  = ahrom_tse_df2[['Date', '<CLOSE>']]
+#print(selected_ahrom_tse_df2)
+
+tavan_tse_df2 = tavan_tse_df
+tavan_tse_df2 = tavan_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_tavan_tse_df2  = tavan_tse_df2[['Date', '<CLOSE>']]
+#print(selected_tavan_tse_df2)
+
+jahesh_tse_df2 = jahesh_tse_df
+jahesh_tse_df2 = jahesh_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_jahesh_tse_df2  = jahesh_tse_df2[['Date', '<CLOSE>']]
+#print(selected_jahesh_tse_df2)
+
+shetab_tse_df2 = shetab_tse_df
+shetab_tse_df2 = shetab_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_shetab_tse_df2  = shetab_tse_df2[['Date', '<CLOSE>']]
+#print(selected_shetab_tse_df2)
+
+moj_tse_df2 = moj_tse_df
+moj_tse_df2 = moj_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_moj_tse_df2  = moj_tse_df2[['Date', '<CLOSE>']]
+#print(selected_moj_tse_df2)
+
+narenj_tse_df2 = narenj_tse_df
+narenj_tse_df2 = narenj_tse_df2.rename(columns={'<DTYYYYMMDD>': 'Date'})
+#print(bidar_tse_df2)
+selected_narenj_tse_df2  = narenj_tse_df2[['Date', '<CLOSE>']]
+#print(selected_narenj_tse_df2)
+
+
+
+
+
+
+#print(bidar_df['Date'])
+bidar_df2 = bidar_df.copy()
+#print(bidar_df2['Date'])
+bidar_df2['Date'] = bidar_df2['Date'].apply(convert_to_gregorian)
+bidar_df2  = bidar_df2[['Date', 'bidar_NAV']]
+#print(bidar_df2)
+
+ahrom_df2 = ahrom_df.copy()
+#print(ahrom_df2['Date'])
+ahrom_df2['Date'] = ahrom_df2['Date'].apply(convert_to_gregorian)
+ahrom_df2  = ahrom_df2[['Date', 'ahrom_NAV']]
+#print(ahrom_df2)
+
+tavan_df2 = Tavan_df.copy()
+#print(tavan_df2['Date'])
+tavan_df2['Date'] = tavan_df2['Date'].apply(convert_to_gregorian)
+tavan_df2  = tavan_df2[['Date', 'tavan_NAV']]
+#print(tavan_df2)
+
+jahesh_df2 = jahesh_df.copy()
+#print(tavan_df2['Date'])
+jahesh_df2['Date'] = jahesh_df2['Date'].apply(convert_to_gregorian)
+jahesh_df2  = jahesh_df2[['Date', 'jahesh_NAV']]
+#print(jahesh_df2)
+
+shetab_df2 = shetab_df.copy()
+#print(tavan_df2['Date'])
+shetab_df2['Date'] = shetab_df2['Date'].apply(convert_to_gregorian)
+shetab_df2  = shetab_df2[['Date', 'shetab_NAV']]
+#print(shetab_df2)
+
+moj_df2 = moj_df.copy()
+#print(tavan_df2['Date'])
+moj_df2['Date'] = moj_df2['Date'].apply(convert_to_gregorian)
+moj_df2  = moj_df2[['Date', 'moj_NAV']]
+#print(moj_df2)
+
+narenj_df2 = narenj_df.copy()
+#print(tavan_df2['Date'])
+narenj_df2['Date'] = narenj_df2['Date'].apply(convert_to_gregorian)
+narenj_df2  = narenj_df2[['Date', 'narenj_NAV']]
+#print(narenj_df2)
+
+
+
+
+
+
+"""ترکیب ناو و قیمت کلوز """
+plt.figure(figsize=(20, 8))  # تعیین اندازه نمودار (عرض: 12، ارتفاع: 8)
+
+bidar_df2.loc[:, 'Date'] = bidar_df2['Date'].astype(int)
+bidar_NAV = pd.merge(selected_bidar_tse_df2, bidar_df2, on='Date', how='inner')
+bidar_NAV['bubble']= (bidar_NAV['<CLOSE>']/bidar_NAV['bidar_NAV'])*100
+#print(bidar_NAV)
+
+ahrom_df2.loc[:, 'Date'] = ahrom_df2['Date'].astype(int)
+ahrom_NAV = pd.merge(selected_ahrom_tse_df2, ahrom_df2, on='Date', how='inner')
+ahrom_NAV['bubble']= (ahrom_NAV['<CLOSE>']/ahrom_NAV['ahrom_NAV'])*100
+#print(ahrom_NAV)
+
+tavan_df2.loc[:, 'Date'] = tavan_df2['Date'].astype(int)
+tavan_NAV = pd.merge(selected_tavan_tse_df2, tavan_df2, on='Date', how='inner')
+tavan_NAV['bubble']= (tavan_NAV['<CLOSE>']/tavan_NAV['tavan_NAV'])*100
+#print(tavan_NAV)
+
+jahesh_df2.loc[:, 'Date'] = jahesh_df2['Date'].astype(int)
+jahesh_NAV = pd.merge(selected_jahesh_tse_df2, jahesh_df2, on='Date', how='inner')
+jahesh_NAV['bubble']= (jahesh_NAV['<CLOSE>']/jahesh_NAV['jahesh_NAV'])*100
+#print(jahesh_NAV)
+
+shetab_df2.loc[:, 'Date'] = shetab_df2['Date'].astype(int)
+shetab_NAV = pd.merge(selected_shetab_tse_df2, shetab_df2, on='Date', how='inner')
+shetab_NAV['bubble']= (shetab_NAV['<CLOSE>']/shetab_NAV['shetab_NAV'])*100
+#print(shetab_NAV)
+
+moj_df2.loc[:, 'Date'] = moj_df2['Date'].astype(int)
+moj_NAV = pd.merge(selected_moj_tse_df2, moj_df2, on='Date', how='inner')
+moj_NAV['bubble']= (moj_NAV['<CLOSE>']/moj_NAV['moj_NAV'])*100
+#print(moj_NAV)
+
+narenj_df2.loc[:, 'Date'] = narenj_df2['Date'].astype(int)
+narenj_NAV = pd.merge(selected_narenj_tse_df2, narenj_df2, on='Date', how='inner')
+narenj_NAV['bubble']= (narenj_NAV['<CLOSE>']/narenj_NAV['narenj_NAV'])*100
+
+
+
+#print(narenj_NAV)
+#print(merged_df.iloc[:,8])
+shakhes_koll.index = shakhes_koll.index.str.replace('-', '')
+
+
+""" رسم نمودار حباب"""
+fig, ax1 = plt.subplots(figsize=(20, 8))  # عرض: 20 اینچ، ارتفاع: 8 اینچ
+l1 = get_display(arabic_reshaper.reshape('تاریخچه  حباب '))
+ax1.set_title(l1)
+l1 = get_display(arabic_reshaper.reshape('بیدار'))
+ax1.plot(bidar_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('اهرم'))
+ax1.plot(ahrom_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('توان'))
+ax1.plot(tavan_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('جهش'))
+ax1.plot(jahesh_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('شتاب'))
+ax1.plot(shetab_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('موج'))
+ax1.plot(moj_NAV.iloc[:,3],label=l1)
+l1 = get_display(arabic_reshaper.reshape('نارنج'))
+ax1.plot(narenj_NAV.iloc[:,3],label=l1)
+ax2 = ax1.twinx()
+l1 = get_display(arabic_reshaper.reshape('شاخص کل'))
+ax2.plot(shakhes_koll.iloc[:len(ahrom_NAV),0],label=l1,linewidth=5)
+plt.legend()
+
+l1 = get_display(arabic_reshaper.reshape('روز'))
+l2 = get_display(arabic_reshaper.reshape('میزان حباب'))
+l3 = get_display(arabic_reshaper.reshape('شاخص کل'))
+ax1.set_xlabel(l1)
+ax1.set_ylabel(l2)
+ax2.set_ylabel(l3)
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+plt.xticks([])
+#plt.figure(figsize=(12, 50)) 
+plt.gca().invert_xaxis()
+plt.grid(True) 
+# ذخیره نمودار به عنوان تصویر
+file_path = 'bubble_percent_chart.png'
+plt.savefig(file_path, dpi=300, bbox_inches='tight') 
+
+plt.show()
+
+if os.name == 'nt':  # برای ویندوز
+    os.startfile(file_path)
+elif os.name == 'posix':  # برای macOS یا Linux
+    try:
+        os.system(f'open {file_path}')  # macOS
+    except:
+        os.system(f'xdg-open {file_path}')  # Linux
+
+
+
+
+# تنظیم اندازه خروجی
+#display(HTML("<style>.output_wrapper, .output {overflow-x: auto;}</style>"))
+"""
+# دریافت ورودی از کاربر
+days_to_show_return = input("در چه بازه هایی ریترن ها نمایش داده شوند یک لیستی از بازه ها را وارد کنید و با کاما جدا کنید")
+# تبدیل ورودی به لیست
+days_to_show_return = [int(x) for x in days_to_show_return.split(',')]
+"""
+
+data = [
+    [bidar_NAV["bubble"].iloc[0],ahrom_NAV["bubble"].iloc[0],tavan_NAV["bubble"].iloc[0],jahesh_NAV["bubble"].iloc[0],shetab_NAV["bubble"].iloc[0],moj_NAV["bubble"].iloc[0],narenj_NAV["bubble"].iloc[0]],
+    [market_cap["bidar_marketcap"].iloc[-1]*0.0000000000001,market_cap["ahrom_marketcap"].iloc[-1]*0.0000000000001,market_cap["tavan_marketcap"].iloc[-1]*0.0000000000001,market_cap["jahesh_marketcap"].iloc[-1]*0.0000000000001,market_cap["shetab_marketcap"].iloc[-1]*0.0000000000001,market_cap["moj_marketcap"].iloc[-1]*0.0000000000001,market_cap["narenj_marketcap"].iloc[-1]*0.0000000000001], 
+    [merged_df["bidar_z"].iloc[-1],merged_df["ahrom_z"].iloc[-1],merged_df["tavan_z"].iloc[-1],merged_df["jahesh_z"].iloc[-1],merged_df["shetab_z"].iloc[-1],merged_df["moj_z"].iloc[-1],merged_df["narenj_z"].iloc[-1]]    
+]  
+columns = ["bidar", "ahrom", "tavan", "jahesh", "shetab", "moj", "narenj"] 
+index = ["bubble", "market cap", "leverage"]  # ایندکس‌ها
+
+final = pd.DataFrame(data, columns=columns, index=index)
+pd.set_option('display.float_format', '{:.2f}'.format)  # تنظیم دقت اعداد اعشاری
+#print(final)
+
+
+
+
+
+
+    
+for bb in aa:
+    plt.figure(figsize=(12, 6))  
+    
+    cc=bb
+    if cc >= len(bidar_NAV):
+        cc = len(bidar_NAV) - 1
+    bidar_NAV['Return'] = bidar_NAV['<CLOSE>'] / bidar_NAV['<CLOSE>'].iloc[cc]
+    cc=bb
+    if cc >= len(ahrom_NAV):
+        cc = len(ahrom_NAV) - 1
+    ahrom_NAV['Return'] = ahrom_NAV['<CLOSE>'] / ahrom_NAV['<CLOSE>'].iloc[cc] 
+    cc=bb
+    if cc >= len(tavan_NAV):
+        cc = len(tavan_NAV) - 1
+    tavan_NAV['Return'] = tavan_NAV['<CLOSE>'] / tavan_NAV['<CLOSE>'].iloc[cc] 
+    cc=bb
+    if cc >= len(jahesh_NAV):
+        cc = len(jahesh_NAV) - 1
+    jahesh_NAV['Return'] = jahesh_NAV['<CLOSE>'] / jahesh_NAV['<CLOSE>'].iloc[cc] 
+    cc=bb
+    if cc >= len(shetab_NAV):
+        cc = len(shetab_NAV) - 1
+    shetab_NAV['Return'] = shetab_NAV['<CLOSE>'] / shetab_NAV['<CLOSE>'].iloc[cc] 
+    cc=bb
+    if cc >= len(moj_NAV):
+        cc = len(moj_NAV) - 1
+    moj_NAV['Return'] = moj_NAV['<CLOSE>'] / moj_NAV['<CLOSE>'].iloc[cc]
+    cc=bb
+    if cc >= len(narenj_NAV):
+        cc = len(narenj_NAV) - 1
+    narenj_NAV['Return'] = narenj_NAV['<CLOSE>'] / narenj_NAV['<CLOSE>'].iloc[cc] 
+
+    cc=bb
+    if cc >= len(shakhes_koll):
+        cc = len(shakhes_koll) - 1
+    shakhes_koll['Return'] = shakhes_koll['Close'] / shakhes_koll['Close'].iloc[cc] 
+
+
+    """ رسم نمودار """
+    fig, ax1 = plt.subplots()
+    l1 = get_display(arabic_reshaper.reshape('تاریخچه  بازدهی '))
+    ax1.set_title(l1)
+
+    l1 = get_display(arabic_reshaper.reshape('بیدار'))
+    ax1.plot(bidar_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('اهرم'))
+    ax1.plot(ahrom_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('توان'))
+    ax1.plot(tavan_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('جهش'))
+    ax1.plot(jahesh_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('شتاب'))
+    ax1.plot(shetab_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('موج'))
+    ax1.plot(moj_NAV.head(bb).iloc[:,4],label=l1)
+    l1 = get_display(arabic_reshaper.reshape('نارنج'))
+    ax1.plot(narenj_NAV.head(bb).iloc[:,4],label=l1)
+    ax2 = ax1.twinx()
+    l1 = get_display(arabic_reshaper.reshape('شاخص کل'))
+    ax2.plot(shakhes_koll.iloc[:cc,0],label=l1,linewidth=5)
+
+    l1 = get_display(arabic_reshaper.reshape('روز'))
+    l2 = get_display(arabic_reshaper.reshape('بازدهی '))
+    l3 = get_display(arabic_reshaper.reshape('شاخص کل'))
+    ax1.set_xlabel(l1)
+    ax1.set_ylabel(l2)
+    ax2.set_ylabel(l3)
+    ax1.legend(loc='upper left')
+    ax2.legend(loc='upper right')
+    plt.xticks([])
+    #plt.figure(figsize=(12, 50)) 
+    plt.gca().invert_xaxis()
+    plt.grid(True) 
+
+   
+    plt.show()
+       
+print(final)
