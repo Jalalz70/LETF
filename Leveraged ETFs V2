@@ -171,12 +171,6 @@ print("Narenj downloaded (100%)")
 
 
 
-
-
-
-
-
-
 import arabic_reshaper
 from bidi.algorithm import get_display
 
@@ -364,6 +358,7 @@ ax1.legend(loc='upper left')
 ax2.legend(loc='upper right')
 plt.xticks([])
 plt.show()
+
 
 
 def convert_to_gregorian(jalali_date):
@@ -634,7 +629,9 @@ for bb in aa:
 
     """ رسم نمودار """
     fig, ax1 = plt.subplots()
-    l1 = get_display(arabic_reshaper.reshape('تاریخچه  بازدهی '))
+    ll1 = " تاریخچه بازدهی "
+    ll2 = " روزه "
+    l1 = get_display(arabic_reshaper.reshape(ll1 + str(bb) + ll2))
     ax1.set_title(l1)
 
     l1 = get_display(arabic_reshaper.reshape('بیدار'))
@@ -670,5 +667,14 @@ for bb in aa:
 
    
     plt.show()
-       
+
+
 print(final)
+
+   
+
+
+
+
+
+
